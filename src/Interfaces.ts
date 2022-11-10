@@ -25,3 +25,9 @@ export interface PokemonModalDataProps {
   modalData: PokemonProps[]
   
 }
+export interface PokemonUrlProps {
+  url: string;
+  
+}
+
+ 

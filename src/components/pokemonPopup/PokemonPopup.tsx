@@ -32,17 +32,16 @@ const PokemonPopup = ({ modalData }: PokemonModalDataProps) => {
               Stats
             </Typography>
             {pokemon.stats.map((pokemon: PokemonStatsProps) => (
-              <>
+              <React.Fragment key={pokemon.id}>
                 <StyledTypography id={pokemon.id} variant="subtitle1">
                   {pokemon.stat.name + " :"}
-
                   <StyledSlider
                     aria-label={pokemon.stat.name}
                     max={100}
                     value={pokemon.base_stat}
                   />
                 </StyledTypography>
-              </>
+              </React.Fragment>
             ))}
             <Divider sx={{ width: "100%" }} />
             <Typography variant="h6" component="h1">

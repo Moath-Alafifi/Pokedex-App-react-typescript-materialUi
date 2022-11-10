@@ -1,12 +1,7 @@
 import React from "react";
 import useFetchedPokemons from "../../Hooks/useFetchedPokemons";
 import PokemonPopup from "../pokemonPopup/PokemonPopup";
-import {
-  Typography,
-  FormControlLabel,
-  Switch,
-  Modal,
-} from "@mui/material";
+import { Typography, FormControlLabel, Switch, Modal } from "@mui/material";
 import {
   StyledBox,
   StyledPopupWrapper,

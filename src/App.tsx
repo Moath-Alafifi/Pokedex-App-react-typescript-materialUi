@@ -1,13 +1,13 @@
-import Footer from "./componentes/footer/Footer";
-import PokemonCart from "./componentes/pokemonCart/PokemonCart";
-import SavedPokemons from "./componentes/savedPokemons/SavedPokemons";
-import SearchPokemons from "./componentes/searchPokemons/SearchPokemons";
+import Footer from "./components/footer/Footer";
+import PokemonCart from "./components/pokemonCart/PokemonCart";
+import SavedPokemons from "./components/savedPokemons/SavedPokemons";
+import SearchPokemons from "./components/searchPokemons/SearchPokemons";
 
 function App() {
   return (
     <>
       <SavedPokemons />
-      <SearchPokemons />
+      <SearchPokemons/>
       <PokemonCart />
       <Footer/>
     </>

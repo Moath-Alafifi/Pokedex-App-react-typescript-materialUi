@@ -1,9 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
-type ResultType = {
-  url: string;
-};
+import { PokemonUrlProps } from "../Interfaces";
 
 function useFetchedPokemons() {
   const [data, setData] = useState([]);
@@ -18,7 +15,8 @@ function useFetchedPokemons() {
             axios
               .all(
                 res.data.results.map(
-                  async (promise: ResultType) => await axios.get(promise.url)
+                  async (promise: PokemonUrlProps) =>
+                    await axios.get(promise.url)
                 )
               )
               .then((val: any) => {

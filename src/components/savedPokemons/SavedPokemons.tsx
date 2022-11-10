@@ -11,7 +11,7 @@ function SavedPokemons() {
         `Captured-${pokemon.id}`
       ) as HTMLInputElement;
 
-      checkbox?.addEventListener("click", (e) => {
+      checkbox.addEventListener("click", (e) => {
         let target = e.target as HTMLInputElement;
         if (target.value == pokemon.id) {
           if (checkbox) {
@@ -28,16 +28,13 @@ function SavedPokemons() {
       if (retrievedObject) {
         let savedData = JSON.parse(retrievedObject);
         if (savedData) {
-          if (checkbox) {
-            checkbox.defaultChecked = true;
-            console.log(checkbox.defaultChecked);
-          }
+          checkbox.defaultChecked = true;
         }
       }
     });
   }, [pokemons]);
 
-  return <></>;
+  return null;
 }
 
 export default SavedPokemons;

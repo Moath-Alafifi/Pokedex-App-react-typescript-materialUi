@@ -10,7 +10,6 @@ const SearchPokemons = () => {
     pokemons.map((pokemon: PokemonProps) => {
       let cardContainer = document.getElementById(pokemon.id);
       let styledWrapper = document.getElementById('styled-wrapper');
-    
       let pokemonName = document.getElementById(pokemon.name);
       if (cardContainer &&styledWrapper) {
         if (pokemonName?.innerText.includes(e.target.value)) {
