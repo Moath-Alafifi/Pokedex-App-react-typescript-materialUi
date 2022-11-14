@@ -10,7 +10,7 @@ function useFetchedPokemons() {
       const rangeInt = Math.floor(Math.random() * 150);
       try {
         await axios
-          .get(`https://pokeapi.co/api/v2/pokemon?limit=8&offset=0`)
+          .get(`https://pokeapi.co/api/v2/pokemon?limit=8&offset=${rangeInt}`)
           .then((res) => {
             axios
               .all(
@@ -30,7 +30,7 @@ function useFetchedPokemons() {
     getData();
   }, []);
 
-  const pokemons = data.map((val: any) => val.data);
+  const pokemons = data.map((val: any) => val.data) as [];
 
   return [pokemons];
 }

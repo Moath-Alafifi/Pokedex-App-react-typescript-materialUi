@@ -1,5 +1,4 @@
-import React from "react";
-import useFetchedPokemons from "../../Hooks/useFetchedPokemons";
+import React, { useState } from "react";
 import PokemonPopup from "../pokemonPopup/PokemonPopup";
 import { Typography, FormControlLabel, Switch, Modal } from "@mui/material";
 import {
@@ -8,12 +7,15 @@ import {
   StyledAvatar,
   StyledWrapper,
 } from "./styled";
-import { PokemonProps, PokemonTypeProps } from "../../Interfaces";
+import {
+  PokemonArrProps,
+  PokemonProps,
+  PokemonTypeProps,
+} from "../../Interfaces";
 
-const PokemonCart = () => {
-  const [pokemons] = useFetchedPokemons();
-  const [open, setOpen] = React.useState(false);
-  const [modalData, setModalData] = React.useState<PokemonProps[]>([]);
+const PokemonCart = ({ pokemons }: PokemonArrProps) => {
+  const [open, setOpen] = useState(false);
+  const [modalData, setModalData] = useState<PokemonProps[]>([]);
 
   const handleClose = () => {
     setOpen(false);
@@ -57,7 +59,7 @@ const PokemonCart = () => {
 
               <FormControlLabel
                 value={pokemon.id}
-                control={<Switch id={`Captured-${pokemon.id}`} />}
+                control={<Switch id={`Captured-${pokemon.id}`}/>}
                 label="Captured"
               />
             </StyledBox>

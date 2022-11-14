@@ -1,3 +1,6 @@
+export interface PokemonArrProps {
+  pokemons: [];
+}
 export interface PokemonProps {
   id: string;
   name: string;

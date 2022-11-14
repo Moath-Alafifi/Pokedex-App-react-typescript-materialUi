@@ -1,17 +1,14 @@
 import { useEffect } from "react";
-import useFetchedPokemons from "../../Hooks/useFetchedPokemons";
-import { PokemonProps } from "../../Interfaces";
+import { PokemonProps, PokemonArrProps } from "../../Interfaces";
 
-function SavedPokemons() {
-  const [pokemons] = useFetchedPokemons();
-
+function SavedPokemons({ pokemons }: PokemonArrProps) {
   useEffect(() => {
     pokemons.map((pokemon: PokemonProps) => {
       let checkbox = document.getElementById(
         `Captured-${pokemon.id}`
       ) as HTMLInputElement;
 
-      checkbox.addEventListener("click", (e) => {
+      checkbox?.addEventListener("click", (e) => {
         let target = e.target as HTMLInputElement;
         if (target.value == pokemon.id) {
           if (checkbox) {
@@ -28,12 +25,12 @@ function SavedPokemons() {
       if (retrievedObject) {
         let savedData = JSON.parse(retrievedObject);
         if (savedData) {
-          checkbox.defaultChecked = true;
+          checkbox.checked = true;
         }
       }
     });
-  }, [pokemons]);
-
+  });
+ 
   return null;
 }
 

@@ -1,12 +1,14 @@
 import * as React from "react";
 import { StyledSlider, StyledTypography } from "./styled";
 import { Avatar, Divider, Typography } from "@mui/material";
-import { PokemonProps, PokemonModalDataProps } from "../../Interfaces";
 import {
   PokemonStatsProps,
   PokemonTypeProps,
   PokemonMovesProps,
+  PokemonProps,
+  PokemonModalDataProps,
 } from "../../Interfaces";
+import { v4 as statsId } from "uuid";
 
 const PokemonPopup = ({ modalData }: PokemonModalDataProps) => {
   return (
@@ -32,7 +34,7 @@ const PokemonPopup = ({ modalData }: PokemonModalDataProps) => {
               Stats
             </Typography>
             {pokemon.stats.map((pokemon: PokemonStatsProps) => (
-              <React.Fragment key={pokemon.id}>
+              <React.Fragment key={statsId()}>
                 <StyledTypography id={pokemon.id} variant="subtitle1">
                   {pokemon.stat.name + " :"}
                   <StyledSlider
