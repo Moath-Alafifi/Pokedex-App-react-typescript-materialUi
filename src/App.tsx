@@ -1,20 +1,12 @@
-import { Backdrop } from "@mui/material";
-import Footer from "./components/footer/Footer";
-import PokemonCart from "./components/pokemonCart/PokemonCart";
-import SavedPokemons from "./components/savedPokemons/SavedPokemons";
-import SearchPokemons from "./components/searchPokemons/SearchPokemons";
-import useFetchedPokemons from "./Hooks/useFetchedPokemons";
+import Footer from "./components/footer";
+import PokemonCart from "./components/pokemonCart";
+import SearchPokemons from "./components/searchPokemons";
 
 function App() {
-  const [pokemons] = useFetchedPokemons();
-  if (!pokemons.length) {
-    return <Backdrop open={true} />
-  }
   return (
     <>
-      <SavedPokemons pokemons={pokemons} />
-      <SearchPokemons pokemons={pokemons} />
-      <PokemonCart pokemons={pokemons} />
+      <SearchPokemons />
+      
       <Footer />
     </>
   );

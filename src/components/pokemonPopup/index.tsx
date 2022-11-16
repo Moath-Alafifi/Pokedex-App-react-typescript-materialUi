@@ -1,6 +1,5 @@
 import * as React from "react";
-import { StyledSlider, StyledTypography } from "./styled";
-import { Avatar, Divider, Typography } from "@mui/material";
+import { Avatar, Divider, Slider, Typography } from "@mui/material";
 import {
   PokemonStatsProps,
   PokemonTypeProps,
@@ -9,6 +8,19 @@ import {
   PokemonModalDataProps,
 } from "../../Interfaces";
 import { v4 as statsId } from "uuid";
+
+const styledSlider = {
+  " & .MuiSlider-thumb": {
+    display: "none",
+  },
+  width: "70%",
+  height: 7,
+};
+const styledTypography = {
+  display: "inline-flex",
+  width: "100%",
+  justifyContent: "space-between",
+};
 
 const PokemonPopup = ({ modalData }: PokemonModalDataProps) => {
   return (
@@ -35,14 +47,19 @@ const PokemonPopup = ({ modalData }: PokemonModalDataProps) => {
             </Typography>
             {pokemon.stats.map((pokemon: PokemonStatsProps) => (
               <React.Fragment key={statsId()}>
-                <StyledTypography id={pokemon.id} variant="subtitle1">
+                <Typography
+                  sx={styledTypography}
+                  id={pokemon.id}
+                  variant="subtitle1"
+                >
                   {pokemon.stat.name + " :"}
-                  <StyledSlider
+                  <Slider
+                    sx={styledSlider}
                     aria-label={pokemon.stat.name}
                     max={100}
                     value={pokemon.base_stat}
                   />
-                </StyledTypography>
+                </Typography>
               </React.Fragment>
             ))}
             <Divider sx={{ width: "100%" }} />
