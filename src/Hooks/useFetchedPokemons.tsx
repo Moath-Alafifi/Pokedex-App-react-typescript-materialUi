@@ -5,13 +5,12 @@ import { PokemonUrlProps } from "../Interfaces";
 function useFetchedPokemons(searchParam: string | null) {
   const [data, setData] = useState<any>([]);
   const [error, setError] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const rangeInt = Math.floor(Math.random() * 150);
   let url = "https://pokeapi.co/api/v2/pokemon/";
-  url += searchParam ? searchParam : rangeInt;
+  url += searchParam ? searchParam : `?limit=8&offset=0`;
 
-  console.log(searchParam);
   const getData = useCallback(async () => {
     try {
       await axios.get(url).then(async (res) => {
@@ -23,17 +22,17 @@ function useFetchedPokemons(searchParam: string | null) {
               )
             )
             .then((val: any) => {
-              setIsLoaded(true);
+              setIsLoading(false);
               setData(val);
             });
         } else {
-          setIsLoaded(true);
+          setIsLoading(false);
           setData([res]);
         }
       });
     } catch (err) {
-      setIsLoaded(true);
-      setError(err);
+      setIsLoading(false);
+      setError(true);
     }
   }, [searchParam]);
 
@@ -43,7 +42,7 @@ function useFetchedPokemons(searchParam: string | null) {
 
   const pokemons = data.map((val: any) => val.data) as [];
 
-  return [pokemons, error, isLoaded];
+  return [pokemons,error, isLoading ];
 }
 
 export default useFetchedPokemons;

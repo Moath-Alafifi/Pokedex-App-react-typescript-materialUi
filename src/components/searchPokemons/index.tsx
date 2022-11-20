@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Typography, Box, InputBase } from "@mui/material";
 import useFetchedPokemons from "../../Hooks/useFetchedPokemons";
 import PokemonCart from "../pokemonCart";
@@ -30,8 +30,7 @@ const styledTypography = {
   paddingRight: 5,
 };
 const SearchPokemons = () => {
-  const searchRef = useRef<any>(null);
-  const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [searchValue, setSearchValue] = useState<string | null>("");
   const [pokemons] = useFetchedPokemons(searchValue);
 
   return (
@@ -40,13 +39,11 @@ const SearchPokemons = () => {
         <Typography sx={styledTypography}>Search Pokemons</Typography>
         <InputBase
           sx={styledInputBase}
-          inputRef={searchRef}
-          onChange={() => setSearchValue(searchRef.current?.value)}
+          onChange={(e) => setSearchValue(e.target.value)}
           type="search"
           placeholder="Search…"
         />
       </Box>
-
       <PokemonCart pokemons={pokemons} />
     </>
   );

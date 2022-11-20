@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import PokemonPopup from "../pokemonPopup";
 import {
   Typography,
@@ -56,28 +56,45 @@ const styledPopupWrapper = {
 const PokemonCart = ({ pokemons }: any) => {
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState<PokemonProps[]>([]);
-
-  const switchRef = useRef<any>();
-  const [error, isLoaded] = useFetchedPokemons(null);
-  const [localStorageState, setLocalStorageState] = useLocalStorageState('savedPokemons' );
-  // if (error) {
-  //   return <h1>no such pokemon</h1>;
-  // } else if (!isLoaded) {
-  //   return <Backdrop open={true} />;
-  // }
-  useEffect(() => {
-    pokemons.map((pokemon: any) => {
-      let data = localStorage.getItem(pokemon.id);
-      if (data) {
-        let savedData = JSON.parse(data);
-        if (savedData) switchRef.current.checked = true;
-      }
-    });
-  }, [pokemons]);
+  const [error, isLoading] = useFetchedPokemons(null);
+  const { localStorageState, setLocalStorageState } =
+    useLocalStorageState("savedPokemons");
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChecked = (
+    e: ChangeEvent<HTMLInputElement>,
+    pokemon: any,
+    pokemonId: string
+  ) => {
+    e.target.checked
+      ? setLocalStorageState(
+          JSON.stringify([...JSON.parse(localStorageState), pokemon])
+        )
+      : setLocalStorageState(
+          JSON.stringify(
+            JSON.parse(localStorageState).filter(
+              (item: PokemonProps) => item.id !== pokemonId
+            )
+          )
+        );
+  };
+
+  const handleIsCaptured = (id: string) => {
+    const localStorageData = JSON.parse(localStorageState);
+    const isCaptured = localStorageData.find(
+      (pokemon: PokemonProps) => pokemon.id === id
+    );
+    return !!isCaptured;
+  };
+
+  if (error) {
+    console.log(error);
+  } else if (isLoading) {
+    return <Backdrop open={true} />;
+  }
 
   return (
     <Box sx={styledWrapper}>
@@ -113,14 +130,11 @@ const PokemonCart = ({ pokemons }: any) => {
               </Typography>
 
               <FormControlLabel
-                value={pokemon.id}
                 control={
                   <Switch
-                    inputRef={switchRef}
-                    onChange={(e) =>
-                      e.target.checked
-                        ? setLocalStorageState('')
-                        : localStorage.removeItem(pokemon.id)
+                    checked={handleIsCaptured(pokemon.id)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                      handleChecked(e, pokemon, pokemon.id)
                     }
                   />
                 }
