@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
-import { PokemonUrlProps } from "../Interfaces";
+import { fetchAllPokemons } from "../utilities";
 
 function useFetchedPokemons(searchParam: string | null) {
   const [data, setData] = useState<any>([]);
@@ -9,23 +9,19 @@ function useFetchedPokemons(searchParam: string | null) {
 
   const rangeInt = Math.floor(Math.random() * 150);
   let url = "https://pokeapi.co/api/v2/pokemon/";
-  url += searchParam ? searchParam : `?limit=8&offset=0`;
+  url += searchParam ? searchParam : `?limit=8&offset=${rangeInt}`;
 
   const getData = useCallback(async () => {
     try {
       await axios.get(url).then(async (res) => {
         if (!searchParam) {
-          await axios
-            .all(
-              res.data.results.map(
-                async (promise: PokemonUrlProps) => await axios.get(promise.url)
-              )
-            )
-            .then((val: any) => {
-              setIsLoading(false);
-              setData(val);
-            });
+          fetchAllPokemons(res.data.results).then((val: any) => {
+            setError(false);
+            setIsLoading(false);
+            setData(val);
+          });
         } else {
+          setError(false);
           setIsLoading(false);
           setData([res]);
         }
@@ -42,7 +38,7 @@ function useFetchedPokemons(searchParam: string | null) {
 
   const pokemons = data.map((val: any) => val.data) as [];
 
-  return [pokemons,error, isLoading ];
+  return { pokemons, error, isLoading };
 }
 
 export default useFetchedPokemons;

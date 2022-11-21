@@ -1,6 +1,3 @@
-export interface PokemonArrProps {
-  pokemons: [];
-}
 export interface PokemonProps {
   id: string;
   name: string;
@@ -17,20 +14,15 @@ export interface PokemonTypeProps {
 export interface PokemonStatsProps {
   stat: { name: string };
   id: string;
-  base_stat:number
+  base_stat: number;
 }
 export interface PokemonMovesProps {
   move: { name: string };
-  
 }
 
 export interface PokemonModalDataProps {
-  modalData: PokemonProps[]
-  
+  modalData: PokemonProps[];
 }
 export interface PokemonUrlProps {
   url: string;
-  
 }
-
- 

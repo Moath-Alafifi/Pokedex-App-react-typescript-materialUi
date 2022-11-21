@@ -7,12 +7,15 @@ import {
   Modal,
   Box,
   Avatar,
-  Backdrop,
 } from "@mui/material";
 
 import { PokemonProps, PokemonTypeProps } from "../../Interfaces";
 import { useLocalStorageState } from "../../Hooks/useLocalStorageState";
-import useFetchedPokemons from "../../Hooks/useFetchedPokemons";
+import {
+  filterDataAndConvertItToString,
+  findData,
+  SaveAndAddAndConvertDataToString,
+} from "../../utilities";
 
 const styledBox = {
   display: "flex",
@@ -33,6 +36,12 @@ const styledWrapper = {
   backgroundColor: "#5DB9FF",
   padding: "20px !important",
   minHeight: 550,
+  " @media (max-width: 640px)": {
+    justifyContent: "center",
+  },
+  " @media (max-width: 940px)": {
+    justifyContent: "space-around",
+  },
 };
 const styledAvatar = {
   width: 120,
@@ -51,15 +60,22 @@ const styledPopupWrapper = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+  " @media (max-width: 640px)": {
+    width: "75vw",
+  },
 };
 
 const PokemonCart = ({ pokemons }: any) => {
   const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState<PokemonProps[]>([]);
-  const [error, isLoading] = useFetchedPokemons(null);
   const { localStorageState, setLocalStorageState } =
     useLocalStorageState("savedPokemons");
 
+  const handleOpen = (e: React.MouseEvent<HTMLDivElement>, pokemon: any) => {
+    let target = e.target as HTMLButtonElement;
+    setModalData([pokemon]);
+    setOpen(target.tagName === "INPUT" ? false : true);
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -71,30 +87,16 @@ const PokemonCart = ({ pokemons }: any) => {
   ) => {
     e.target.checked
       ? setLocalStorageState(
-          JSON.stringify([...JSON.parse(localStorageState), pokemon])
+          SaveAndAddAndConvertDataToString(localStorageState, pokemon)
         )
       : setLocalStorageState(
-          JSON.stringify(
-            JSON.parse(localStorageState).filter(
-              (item: PokemonProps) => item.id !== pokemonId
-            )
-          )
+          filterDataAndConvertItToString(localStorageState, pokemonId)
         );
   };
 
   const handleIsCaptured = (id: string) => {
-    const localStorageData = JSON.parse(localStorageState);
-    const isCaptured = localStorageData.find(
-      (pokemon: PokemonProps) => pokemon.id === id
-    );
-    return !!isCaptured;
+    return findData(localStorageState, id);
   };
-
-  if (error) {
-    console.log(error);
-  } else if (isLoading) {
-    return <Backdrop open={true} />;
-  }
 
   return (
     <Box sx={styledWrapper}>
@@ -104,11 +106,9 @@ const PokemonCart = ({ pokemons }: any) => {
             <Box
               sx={styledBox}
               id={pokemon.id}
-              onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-                let target = e.target as HTMLButtonElement;
-                setModalData([pokemon]);
-                setOpen(target.tagName === "INPUT" ? false : true);
-              }}
+              onClick={(e: React.MouseEvent<HTMLDivElement>) =>
+                handleOpen(e, pokemon)
+              }
             >
               <Typography variant="h6" component="h1">
                 {pokemon.id}
