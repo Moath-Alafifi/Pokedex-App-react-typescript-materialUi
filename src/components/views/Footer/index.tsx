@@ -1,9 +1,5 @@
 import { Box } from "@mui/material";
-
-const styledBox = {
-  height: 80,
-  backgroundColor: "#2e7ebb",
-};
+import { styledBox } from "./styles";
 
 const Footer = () => {
   return <Box style={styledBox} />;

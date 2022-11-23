@@ -1,14 +1,14 @@
 import axios from "axios";
 import { PokemonProps, PokemonUrlProps } from "../Interfaces";
 
-export const SaveAndAddAndConvertDataToString = (
+export const setPokemon = (
   localStorageState: any,
   pokemon: any
 ) => {
   return JSON.stringify([...JSON.parse(localStorageState), pokemon]);
 };
 
-export const filterDataAndConvertItToString = (
+export const removePokemon = (
   localStorageState: any,
   pokemonId: string
 ) => {
@@ -19,7 +19,7 @@ export const filterDataAndConvertItToString = (
   );
 };
 
-export const findData = (localStorageState: any, id: string) => {
+export const isPokemonSaved = (localStorageState: any, id: string) => {
   const localStorageData = JSON.parse(localStorageState);
   const isCaptured = localStorageData.find(
     (pokemon: PokemonProps) => pokemon.id === id
