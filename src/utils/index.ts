@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PokemonProps, PokemonUrlProps } from "../Interfaces";
+import { PokemonProps, PokemonUrlProps } from "Interfaces";
 
 export const setPokemon = (
   localStorageState: any,
