@@ -99,4 +99,4 @@ const PokemonCart = ({ pokemonId, pokemonName, pokemonImg, pokemon }: any) => {
   );
 };
 
-export default PokemonCart;
+export default  PokemonCart;
